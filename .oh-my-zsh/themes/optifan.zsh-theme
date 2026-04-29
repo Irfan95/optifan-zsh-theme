@@ -7,6 +7,8 @@ autoload -U colors
 # Load the colors module
 colors
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 # Git branch function
 git_branch() {
   local branch
@@ -18,8 +20,16 @@ git_branch() {
   fi
 }
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+venv_prompt() {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    echo "%F{yellow}(.venv)%f "
+  fi
+}
+
 # Left prompt (line 1)
-PROMPT='%F{white}[ %F{cyan}%~%F{white} ]%f$(git_branch)'
+PROMPT='$(venv_prompt)%F{white}[ %F{cyan}%~%F{white} ]%f$(git_branch)'
 
 # Right prompt (line 1)
 RPROMPT='%F{white}[ %F{yellow}%*%F{white} ]%f'
